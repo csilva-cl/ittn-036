@@ -28,6 +28,8 @@ The following diagram shows the proposed architecture that will sustain the Virt
   .. figure:: /_static/vmware_cluster_design.png
      :name: vmware_cluster_design
 
+     VMWare Cluster Design
+
   - The OS (ESXi or vSphere) is mounted in a RAID1, construct over 2x1.6TB SSD, with a failure toleration of 1 SSD and a total pool storage of 1.6TB.
   - 2x RAID5, construct over 4x2TB SSD , with a failure toleration of 1 SSD per RAID and a storage pool of 6TB (each RAID).
   - The RAIDs - from now on, VD (Virtual Device) - are hardware build and directly mapped to the OS.
@@ -47,26 +49,43 @@ WCS stands for Worst Case Scenario. The suggested design takes under considerati
 System Disk Failure
 -------------------
 
+In the first scenario, we consider the loss of one of the two System Disks. With System Disks we are reffering to the drives from were the OS is mounted on. Also, in this case, were one of the Gluster's VM will be allocated:
+
+
   .. figure:: /_static/system_disk_failure.png
-     :name: vmware_cluster_design
+     :name: system_disk_failure
+
+     Losing one System Disk
+
+
+
 
 Data Disks Failure
 ------------------
 
   .. figure:: /_static/data_disk_failure.png
-     :name: vmware_cluster_design
+     :name: data_disk_failure.png
+
+     Losing one Data Disk
+
 
 1 VM or Server loss
 -------------------
 
   .. figure:: /_static/server_failure.png
-     :name: vmware_cluster_design
+     :name: server_failure.png
+
+     Server Failure
+
 
 Network Outage
 --------------
 
   .. figure:: /_static/vmware_cluster_with_network.png
-     :name: vmware_cluster_design
+     :name: vmware_cluster_with_network.png
+
+     VMWare Cluster with Network Connection
+
 
 2 VMs or Servers loss
 ---------------------
