@@ -28,6 +28,14 @@ The following diagram shows the proposed architecture that will sustain the Virt
   .. figure:: /_static/vmware_cluster_design.png
      :name: vmware_cluster_design
 
+  - The OS (ESXi or vSphere) is mounted in a RAID1, construct over 2x1.6TB SSD, with a failure toleration of 1 SSD and a total pool storage of 1.6TB.
+  - 2x RAID5, construct over 4x2TB SSD , with a failure toleration of 1 SSD per RAID and a storage pool of 6TB (each RAID).
+  - The RAIDs - from now on, VD (Virtual Device) - are hardware build and directly mapped to the OS.
+  - Over the local storage - the RAID1, common to the OS - a CentOS Virtual Machine is created.
+  - To each Virtual Machine - one per server - the local VD are mapped into them.
+  - The VMs are interconnected and a Gluster File System is created, composed by 6 Blocks - gluster storage metric, been 1 Block a volume storage, such as one HDD/SDD, VD and LVM. Only one Block is allowed per one of said units.
+  - The newly created GlusterFS (Gluster File System), with a 3 Replica configuration, would have a Storage Pool of 12TB.
+  - The Gluster Storage Pool is then mapped into vCenter Server, and serves as a common pool, for all servers, to allocate the VMs. 
 
 
 .. sectnum::
