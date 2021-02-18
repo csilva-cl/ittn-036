@@ -38,8 +38,37 @@ The following diagram shows the proposed architecture that will sustain the Virt
   - The Gluster Storage Pool is then mapped into vCenter Server, and serves as a common pool, for all servers, to allocate the VMs. 
 
 
+Failover and WCS
+================
+
+WCS stands for Worst Case Scenario. The suggested design takes under consideration the following scenarios:
+
+
+System Disk Failure
+-------------------
+
+  .. figure:: /_static/system_disk_failure.png
+     :name: vmware_cluster_design
+
+Data Disks Failure
+------------------
+
+  .. figure:: /_static/data_disk_failure.png
+     :name: vmware_cluster_design
+
+1 VM or Server loss
+-------------------
+
+  .. figure:: /_static/server_failure.png
+     :name: vmware_cluster_design
+
+Network Outage
+--------------
+
+  .. figure:: /_static/vmware_cluster_with_network.png
+     :name: vmware_cluster_design
+
+2 VMs or Servers loss
+---------------------
+
 .. sectnum::
-
-
-
-
