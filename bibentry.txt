@@ -2,7 +2,7 @@
 
 @DocuShare{ITTN-036,
    author = { Heinrich Reinking },
-    title = {VMWare Cluster Topology and Design},
+    title = {Virtualization Cluster Topology and Design},
      year = 2021,
     month = Feb,
    handle = {ITTN-036},
