@@ -11,11 +11,13 @@ Motivation
 
 New technologies and developments are been discovered at an outstanding rythm. Virtualization became a standard for the industry many years ago, but it has been replaced or substitud by new technologies, like micro-services - containerize applications, but will not be the subject of this documen - but there are still reasons to keep certain amount of services running in a Virtual Machine instead of a Container.
 
-Many of the services that are going to be mentioned as crucial to run in a Virtual Machine, can in fact be deployed in a container, but there are security and loops that are important to prevent:
+Many of the services that are going to be mentioned as crucial to run in a Virtual Machine, can in fact capable of been deployed in a container, but there are security matters and loops avoidance that are important to prevent and consider:
+
   - Rubin Kubernetes clusters run over Fixed DHCP IP, meaning that the members of the cluster are set to use DHCP, and on the other side, the DHCP Server holds a DHCP reservation for the server's MAC Address, so it always will get the same one.
   - Same reasoning applies for DNS Servers; if the service doesn't exists until the container is created, it will create a conflic at kube-dns.
-  - The first time servers are booted - and provisioned - requires an TFTP server for PXE booting.
-
+  - The first time servers are booted - and provisioned - requires a prexisting TFTP server for PXE booting.
+  - An Authentication Database is not recommended to be stored in a PVC - Persistent Volume Claim, kubernetes storage drive - cause complex - maybe not imposible - to export a PVC from one cluster to another. But definitely it would require a redesign of the Authentication Platform.
+  - Last but not least, project-wise, the use of Windows Virtual Machines must continue as it is; not matter there are containers that offers the same services.
 
 
 Requirements
@@ -30,6 +32,7 @@ So that a cluster is called resilient and robust, there are certain criteria and
   - Each node must have the capacity to run, single handed, the Virtual Machines of the whole cluster.
   - If a node is abruptly taken offline, the Virtual Machines running in such node must be able and capable of live auto-migration.
   - If a node irrevocably shuts down - complete hardware failure - the node must be easily replaced with a new one, with no data corruption.
+
 
 
 Design
