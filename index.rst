@@ -6,6 +6,18 @@ This must be a resilient and robust solution, so that it can run and support the
 lsst repo and future other applications.
 
 
+Motivation
+==========
+
+New technologies and developments are been discovered at an outstanding rythm. Virtualization became a standard for the industry many years ago, but it has been replaced or substitud by new technologies, like micro-services - containerize applications, but will not be the subject of this documen - but there are still reasons to keep certain amount of services running in a Virtual Machine instead of a Container.
+
+Many of the services that are going to be mentioned as crucial to run in a Virtual Machine, can in fact be deployed in a container, but there are security and loops that are important to prevent:
+  - Rubin Kubernetes clusters run over Fixed DHCP IP, meaning that the members of the cluster are set to use DHCP, and on the other side, the DHCP Server holds a DHCP reservation for the server's MAC Address, so it always will get the same one.
+  - Same reasoning applies for DNS Servers; if the service doesn't exists until the container is created, it will create a conflic at kube-dns.
+  - The first time servers are booted - and provisioned - requires an TFTP server for PXE booting.
+
+
+
 Requirements
 ============
 
