@@ -34,6 +34,15 @@ So that a cluster is called resilient and robust, there are certain criteria and
   - If a node irrevocably shuts down - complete hardware failure - the node must be easily replaced with a new one, with no data corruption.
 
 
+OpenSource vs Licenced Solution
+===============================
+
+There are several alternatives in the market to deploy a Virtualization Server, and another few for Virtualization Clusters. For this document, we'll be grouping them into 2 big groups OpenSource - no licence or support cost, with support from the OpenSource community - and the Licenced ones - licence and support cost.
+
+OpenSource
+----------
+
+For the OpenSource analysis, we'll be using QEMU. QEMU - short for Quick EMUlator - is a generic open source machine emulator and virtualizer. When used as a virtualizer, is commonly used along KVM - Kernel-based Machine - which can virtualize x86, server and embedded PowerPC, 64-bit POWER, S390, 32-bit and 64-bit ARM, and MIPS guests. 
 
 Design
 ======
