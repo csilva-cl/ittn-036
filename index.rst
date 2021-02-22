@@ -25,7 +25,10 @@ Requirements
 
 So that a cluster is called resilient and robust, there are certain criteria and recommendations that have to be met:
 
-  - The Cluster size has to be an odd number. 
+  - Front-end Grafical User Interface, for easy VMs creation, manipulation, edition and deletion.
+  - Connection to a Centralized User Authentification, such as LDAP, OpenLDAP or FreeIPA.
+  - The Cluster size has to be an odd number.
+  - Reliable support for the Virtualization Platform
   - A common storage pool that all cluster nodes can access at all time.
   - Said storage pool, has to be able to tolerate catastrophic events, such us disk failures, servers maintanance or failure, network outage and prevent data corruption.
   - Each node must be able to be taken offline or shutdown, allowing all services and Virtual Machines to remain ongoing.
@@ -42,10 +45,34 @@ There are several alternatives in the market to deploy a Virtualization Server, 
 OpenSource
 ----------
 
-For the OpenSource analysis, we'll be using QEMU. QEMU - short for Quick EMUlator - is a generic open source machine emulator and virtualizer. When used as a virtualizer, is commonly used along KVM - Kernel-based Machine - which can virtualize x86, server and embedded PowerPC, 64-bit POWER, S390, 32-bit and 64-bit ARM, and MIPS guests. 
+For the OpenSource analysis, we'll be using QEMU. QEMU - short for Quick EMUlator - is a generic open source machine emulator and virtualizer. When used as a virtualizer, is commonly used with KVM - Kernel-based Machine - which can virtualize x86, server and embedded PowerPC, 64-bit POWER, S390, 32-bit and 64-bit ARM, and MIPS guests. 
+
+In terms of requirements:
+
+  - QEMU does have a GUI called Virtual Manager, that allows you to manage VMs running across the cluster.
+    The problem is the access: in order to get to it, you need to either export display through an ssh session or access through remote desktop to the main Hypervisor. Also, simultanueos user access isn't doable, but it can be accomplish through third party applications, like VNC.
+  - QEMU does not allow remote authentification directly into the Virtual Manager, but it can be done through third party applications.
+  - QEMU allows live migration - with a common storage pool - but does not have any live-automigration feature. This means, that if a node shuts down or fails, the VM will fail as well, and it will not be loaded in another server. Also, if the node is lost for good, the VM will have to be recreated in KVM, but the OS and the data will remain, cause the VM's Virtual Drive is in the common storage pool.
+  - Since live migration is an option, a node can be taken off for maintanance or replacement, without outages or downtime required.
+  - The fact that is OpenSource has it advantages and disadvantages. On the Pro side, you have an entire community constantly checking for bugs and also supporting you in case your instance fails, as well as a lot of information online. The Con, OpenSource software is vulnerable to glitches and bugs, and eventhough there is a whole community to support, since you are not paying for seervice, no one is obligated to respond or help.
+  - If used without a common storage pool, and only local server storage, it rises a big risk, cause not only live migration is not an option, but if the server and/or local storage fails, the Virtual Machine is lost for good, representing a dangerous Single Point of Failure (SPF).
+
+VMWare
+------
+
+For the licenced solution, we are going to analyze VMWare's solution: vSphere + vCenter. vSphere is a compute virtualization platform, which along with vCenter, it allows to control multiple Virtualization Servers - that are running vSphere. VMWare offers all amount of services and features, which goes hand by hand with the costs.
+
+In terms of requirements:
+  - It offers a front-end Web User Interface (WUI) through the vCenter Server. This allows to manage, migrate, create, modify or delete VMs, as long with several other services. 
+  - Offers connection to remote Centralized Authentication Platforms.
+  - It has a feature called vMotion, which allows live-automigration, meaning that if a node is scheduled for maintanance or powered off, the VM will automatically be redeployed in another node. 
+  - It comes with a 3 year support, which includes 24/7 online helpdesk and software updates.
+  - vCenter requires of a Common Storage Pool to enable the live-automigration feature.
 
 Design
 ======
+
+It is expected that, since for VMWare you are paying for a service, they must provide support and guarantee a relatively bug-free environment, and eventhough QEMU is capable of doing almost everything that vSphere can, it is not recommended for an industrial usability; specially since the purpose of this cluster is to support and run essential/core services, we must be able to guarantee that neither the servers or storage represents a SPF. Taking under consideration both the benefits and disadvantages of both schemes, the proposed desgined is over VMWare.
 
 The following diagram shows the proposed architecture that will sustain the Virtualization Platform in vCenter:
 
