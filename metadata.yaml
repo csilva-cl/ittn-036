@@ -13,7 +13,7 @@ serial_number: "036"
 doc_id: "ITTN-036"
 
 # Title of the document, without the series/serial designation
-doc_title: "VMWare Cluster Topology and Design"
+doc_title: "Virtualization Cluster Topology and Design"
 
 # Author names, ordered as a list. Each author name should be formatted as 'First Last'
 authors:
